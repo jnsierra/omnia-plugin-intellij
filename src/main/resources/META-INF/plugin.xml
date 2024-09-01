@@ -1,0 +1,19 @@
+<idea-plugin>
+    <id>com.fisa.omnia-plugin-intellij</id>
+
+    <name>Omnia-Generate-Code</name>
+
+    <vendor email="nicolas.sierra@fisagrp.com" url="https://www.yourcompany.com">Fisa</vendor>
+
+    <description>Code generator connecting to OMNIA for QTs</description>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+                id="Rest Template code generation"
+                anchor="bottom"
+                factoryClass="com.fisa.PrincipalToolWindowFactory"
+                icon="AllIcons.Nodes.TextArea"  />
+
+    </extensions>
+</idea-plugin>
