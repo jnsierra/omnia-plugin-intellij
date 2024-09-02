@@ -3,6 +3,7 @@ $PACKAGE_NAME
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+$IMPORT_ENTITY
 
 @Repository
 public interface ${NAME}Repository extends JpaRepository<${NAME}Entity , Long>, CrudRepository<${NAME}Entity , Long> {

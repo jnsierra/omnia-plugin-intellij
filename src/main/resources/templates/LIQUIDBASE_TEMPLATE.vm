@@ -1,0 +1,62 @@
+#set($output = "")
+#set($outputMedium = "")
+#foreach($char in $NAME.substring(1).split(''))
+    #if($char.matches('[A-Z]'))
+        #set($output = "${output}_${char.toLowerCase()}")
+        #set($outputMedium = "${outputMedium}-${char.toLowerCase()}")
+    #else
+        #set($output = "${output}${char}")
+        #set($outputMedium = "${outputMedium}${char}")
+    #end
+#end
+#set($kebab_case_medium = $NAME.substring(0,1).toLowerCase() + $outputMedium )
+#set($kebab_case_down = $NAME.substring(0,1).toLowerCase() + $output )
+#set($atribues = $ATRIBUTES )
+#set($attrs = $atribues.split("\|"))
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="admin" id="1">
+        <createTable tableName="${kebab_case_medium}">
+            <column name="id" type="INT" >
+                <constraints primaryKey="true"/>
+            </column>
+            #foreach($attr in $attrs)
+                #set($parts = $attr.split(":"))
+                #set($outputAttr = "")
+                #foreach($char in $parts[0].substring(1).split(''))
+                    #if($char.matches('[A-Z]'))
+                        #set($outputAttr = "${outputAttr}_${char.toLowerCase()}")
+                    #else
+                        #set($outputAttr = "${outputAttr}${char}")
+                    #end
+                #end
+                #set($kebab_case_down = $parts[0].substring(0,1).toLowerCase() + $outputAttr )
+                <column name="${kebab_case_down}" type="VARCHAR(255)">
+                    <constraints nullable="false" />
+                </column>
+            #end
+        </createTable>
+        <rollback>
+            <dropTable tableName="${kebab_case_medium}"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2" author="admin">
+        #set($output = "")
+        #foreach($char in $NAME.substring(1).split(''))
+            #if($char.matches('[A-Z]'))
+                #set($output = "${output}_${char.toLowerCase()}")
+            #else
+                #set($output = "${output}${char}")
+            #end
+        #end
+        #set($kebab_case_down = $NAME.substring(0,1).toLowerCase() + $output )
+        <createSequence sequenceName="${kebab_case_down}_seq" startValue="1" incrementBy="1" />
+    </changeSet>
+</databaseChangeLog>
+
+<!-- Add this line in config
+<include file="db/${NAME_TABLE}-table.xml" />
+ -->

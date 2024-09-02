@@ -1,0 +1,29 @@
+$PACKAGE_NAME
+
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "${KEBAB_CASE}")
+public class ${NAME}Entity implements Serializable{
+@Id
+@Column(name = "id")
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${SNAKE_CASE}_id_gen")
+@SequenceGenerator(name = "${SNAKE_CASE}_id_gen", sequenceName = "${SNAKE_CASE}_seq", allocationSize = 1)
+private Long id;
+#foreach($filed in $FIELDS)
+@Column(name = "${filed.snakeCaseName}")
+private $filed.typeFieldJava $filed.nameField;
+#end
+}

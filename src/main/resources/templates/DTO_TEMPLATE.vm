@@ -1,0 +1,13 @@
+$PACKAGE_NAME
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ${NAME}DTO{
+    private Long id;
+#foreach($filed in $FIELDS)
+    private $filed.typeFieldJava $filed.nameField;
+#end
+}

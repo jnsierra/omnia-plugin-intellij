@@ -1,0 +1,31 @@
+${PACKAGE_NAME}
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.List;
+${IMPORT_REPOSITORY}
+${IMPORT_SERVICE}
+$IMPORT_ENTITY
+
+@Service
+public class ${NAME}ServiceImpl implements ${NAME}Service {
+    private final ${NAME}Repository ${nameService}Repository;
+    @Autowired
+    public ${NAME}ServiceImpl(${NAME}Repository ${nameService}Repository) {
+        this.${nameService}Repository = ${nameService}Repository;
+    }
+    @Override
+    public Optional<${NAME}Entity> getById(Long id){
+        return ${nameService}Repository.findById(id);
+    }
+    @Override
+    public ${NAME}Entity save(${NAME}Entity entity){
+        return ${nameService}Repository.save(entity);
+    }
+    @Override
+    public List<${NAME}Entity> getAll(){
+        return ${nameService}Repository.findAll();
+    }
+}

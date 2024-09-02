@@ -1,7 +1,8 @@
 package com.fisa.logic;
 
+import com.fisa.dto.DataTypeDTO;
+import com.fisa.logic.impl.*;
 import com.fisa.utils.StringUtils;
-import com.fisa.logic.impl.RepositoryTemplate;
 import com.intellij.openapi.wm.ToolWindow;
 
 import javax.swing.*;
@@ -16,7 +17,10 @@ public class GenerateTemplatesLogic {
     private String entityName;
     private Fields field;
     private ToolWindow toolWindow;
+    private List<DataTypeDTO> fields;
     private final List<CreateFileTemplate> templatesList = new ArrayList<>();
+
+
     private final Predicate<String> isValidEntityName = entityName -> {
         if (entityName == null || entityName.isEmpty()) {
             field = Fields.entity_name;
@@ -27,6 +31,12 @@ public class GenerateTemplatesLogic {
 
     public GenerateTemplatesLogic() {
         templatesList.add(new RepositoryTemplate());
+        templatesList.add(new DtoTemplate());
+        templatesList.add(new ServiceTemplate());
+        templatesList.add(new ServiceImplTemplate());
+        templatesList.add(new EntityTemplate());
+        templatesList.add(new ControllerTemplate());
+        templatesList.add(new LiquidbaseTemplate());
     }
 
     public void setEntityName(String entityName) {
@@ -45,8 +55,9 @@ public class GenerateTemplatesLogic {
                         s -> {
                             List<Boolean> resultList =templatesList.stream()
                                     .peek(it -> it.setEntityName(entityName))
+                                    .peek(it -> it.setFields(fields))
                                     .map(CreateFileTemplate::createFileTemplate)
-                                    .peek(it -> System.out.println(it.toString()))
+                                    //.peek(it -> System.out.println(it.toString()))
                                     .map(WriteFileTemplates.getInstance()::write)
                                     .toList();
                             // Verifica si hay algún false
@@ -69,20 +80,8 @@ public class GenerateTemplatesLogic {
         }
         return true;
     }
-}
 
-/**
- * boolean allValid = templatesList.stream().map(it -> {
- * it.setEntityName(this.entityName);
- * return it.createFileTemplate();
- * <p>
- * }).allMatch(valid -> {
- * if(!valid){
- * System.out.println("Alguno genero error");
- * return false;
- * }
- * System.out.println("Llego to true");
- * return valid;
- * });
- * System.out.println("Este es el allValid" + allValid);
- */
+    public void setFields(List<DataTypeDTO> fields) {
+        this.fields = fields;
+    }
+}

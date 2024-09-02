@@ -1,5 +1,6 @@
 package com.fisa;
 
+import com.fisa.dto.DataTypeDTO;
 import com.fisa.logic.GenerateTemplatesLogic;
 import com.fisa.templates.VelocityTemplateProcessor;
 
@@ -9,12 +10,15 @@ import com.intellij.ui.components.JBScrollPane;
 import org.apache.velocity.VelocityContext;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Optional;
 
 public class LeftWindowPanel {
     private final ToolWindow toolWindow;
     private final JPanel mainPanel;
     private final JTextField inputField;
     private final GenerateTemplatesLogic generateTemplatesLogic = new GenerateTemplatesLogic();
+    private RightWindowPanel rightWindowPanel;
 
     public LeftWindowPanel(ToolWindow toolWindow) {
         this.toolWindow = toolWindow;
@@ -30,20 +34,18 @@ public class LeftWindowPanel {
 
         // Configurar la acción del botón
         executeButton.addActionListener(e -> {
-            String inputText = inputField.getText();
-            generateTemplatesLogic.setEntityName(inputText);
-            generateTemplatesLogic.setToolWindow(this.toolWindow);
-            generateTemplatesLogic.executeProcess();
+            //Valido si la tabla tiene datos
+            Optional<List<DataTypeDTO>> validateTable = rightWindowPanel.getDataTable();
+            if( validateInputEntity(inputField) && validateTable.isPresent()) {
+                if(!validateTable.get().isEmpty()){
+                    String inputText = inputField.getText();
+                    generateTemplatesLogic.setEntityName(inputText);
+                    generateTemplatesLogic.setToolWindow(this.toolWindow);
+                    generateTemplatesLogic.setFields(validateTable.get());
+                    generateTemplatesLogic.executeProcess();
+                }
+            }
 
-            // Procesar la plantilla con el texto ingresado
-            //VelocityTemplateProcessor templateProcessor = new VelocityTemplateProcessor();
-            //VelocityContext context = new VelocityContext();
-            //context.put("name", inputText);
-            //context.put("place", "IntelliJ IDEA");
-
-            //String result = templateProcessor.processTemplate("templates/myTemplate.vm", context);
-
-            //JOptionPane.showMessageDialog(mainPanel, result);
         });
 
         //Agregamos el textArea
@@ -58,8 +60,20 @@ public class LeftWindowPanel {
         mainPanel.add(executeButton, BorderLayout.SOUTH);
     }
 
+    boolean validateInputEntity(JTextField textField) {
+        if(textField != null && textField.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el nombre de la entidad");
+            return false;
+        }
+        return true;
+    }
+
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void setRightWindowPanel(RightWindowPanel rightWindowPanel) {
+        this.rightWindowPanel = rightWindowPanel;
     }
 }

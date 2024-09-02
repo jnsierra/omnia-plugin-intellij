@@ -1,0 +1,72 @@
+$PACKAGE_NAME
+
+#set($output = "")
+#set($outputMedium = "")
+#foreach($char in $NAME.substring(1).split(''))
+    #if($char.matches('[A-Z]'))
+        #set($output = "${output}_${char.toLowerCase()}")
+        #set($outputMedium = "${outputMedium}-${char.toLowerCase()}")
+    #else
+        #set($output = "${output}${char}")
+        #set($outputMedium = "${outputMedium}${char}")
+    #end
+#end
+
+#set($kebab_case_medium = $NAME.substring(0,1).toLowerCase() + $outputMedium )
+#set($kebab_case_down = $NAME.substring(0,1).toLowerCase() + $output )
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.modelmapper.ModelMapper;
+
+import java.util.Optional;
+import java.util.List;
+import java.lang.reflect.Type;
+import org.modelmapper.TypeToken;
+${IMPORT_SERVICE}
+$IMPORT_ENTITY
+
+@RestController
+@RequestMapping("/${kebab_case_medium}")
+public class ${NAME}Controller{
+    @Autowired
+    public ${NAME}Controller(${NAME}Service ${nameService}Service, ModelMapper modelMapper) {
+        this.${nameService}Service = ${nameService}Service;
+        this.modelMapper = modelMapper;
+    }
+    private final ${NAME}Service ${nameService}Service;
+    private final ModelMapper modelMapper;
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<${NAME}DTO>> getAll() {
+        List<${NAME}Entity> response = ${nameService}Service.getAll();
+        if (response != null && response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        Type listType = new TypeToken<List<${NAME}DTO>>(){}.getType();
+        return ResponseEntity.ok( modelMapper.map(response, listType) );
+    }
+
+    @GetMapping( value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<${NAME}DTO> getById(@PathVariable("id")Long id){
+        Optional<${NAME}Entity> response = ${nameService}Service.getById(id);
+        if(response.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return response.map(${nameService}Entity -> ResponseEntity.ok(modelMapper.map(${nameService}Entity, ${NAME}DTO.class))).orElseGet(() -> ResponseEntity.noContent().build());
+    }
+
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<${NAME}DTO> save(@RequestBody ${NAME}DTO ${nameService}DTO){
+        ${NAME}Entity entity = modelMapper.map(${nameService}DTO, ${NAME}Entity.class);
+        return new ResponseEntity<>(modelMapper.map(${nameService}Service.save(entity), ${NAME}DTO.class), HttpStatus.CREATED);
+    }
+}

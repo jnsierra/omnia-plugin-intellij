@@ -19,6 +19,8 @@ public class PrincipalToolWindowFactory implements ToolWindowFactory {
         splitPanel.setFirstComponent(leftWindowPanel.getMainPanel());
         splitPanel.setSecondComponent(rightWindowPanel.getMainPanel());
 
+        leftWindowPanel.setRightWindowPanel(rightWindowPanel);
+
         ContentFactory contentFactory = ContentFactory.getInstance();
         Content content = contentFactory.createContent(splitPanel, "", false);
         toolWindow.getContentManager().addContent(content);

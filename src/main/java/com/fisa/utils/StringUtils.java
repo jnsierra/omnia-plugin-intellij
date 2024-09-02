@@ -11,4 +11,35 @@ public enum StringUtils {
         // Validar el String contra la expresión regular
         return input != null && input.matches(camelCasePattern);
     }
+
+    public String mappingDataTypes(String javaDataType) {
+        String sqlType;
+        switch (javaDataType) {
+            case "Date":
+                sqlType = "datetime";
+                break;
+            case "Long":
+                sqlType = "INT";
+                break;
+            default:
+                sqlType = "VARCHAR(255)";
+                break;
+        }
+        return sqlType;
+
+    }
+
+    public static String toKebabCase(String input) {
+        return input
+                .replaceAll("([a-z])([A-Z])", "$1-$2") // Inserta un guion entre letras minúsculas y mayúsculas
+                .replaceAll("([A-Z])([A-Z][a-z])", "$1-$2") // Inserta un guion entre dos letras mayúsculas si la segunda es seguida por una minúscula
+                .toLowerCase(); // Convierte todo a minúsculas
+    }
+
+    public static String toSnakeCase(String input) {
+        return input
+                .replaceAll("([a-z])([A-Z])", "$1_$2") // Inserta un guion bajo entre letras minúsculas y mayúsculas
+                .replaceAll("([A-Z])([A-Z][a-z])", "$1_$2") // Inserta un guion bajo entre dos letras mayúsculas si la segunda es seguida por una minúscula
+                .toLowerCase(); // Convierte todo a minúsculas
+    }
 }
