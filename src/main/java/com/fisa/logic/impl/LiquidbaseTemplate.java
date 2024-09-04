@@ -36,5 +36,21 @@ public class LiquidbaseTemplate extends TemplateAbstract implements CreateFileTe
     @Override
     protected void addParams() {
         context.put("NAME", entityName);
+        context.put("KEBAB_CASE", StringUtils.toKebabCase(entityName));
+        context.put("SNAKE_CASE", StringUtils.toSnakeCase(entityName));
+        context.put("FIELDS", fields);
+        context.put("IS_CHILD_ENTITY", isChildEntity);
+        context.put("FATHER_ENTITY", StringUtils.toSnakeCase(fatherEntity) );
+        context.put("FATHER_ENTITY_KEBAB", StringUtils.toKebabCase(fatherEntity) );
+    }
+
+    @Override
+    public void setIsChildEntity(boolean isChildEntity) {
+        super.isChildEntity = isChildEntity;
+    }
+
+    @Override
+    public void setFatherEntity(String fatherEntity) {
+        super.fatherEntity = fatherEntity;
     }
 }

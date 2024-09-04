@@ -18,7 +18,9 @@ public class VelocityTemplateProcessor {
     public VelocityTemplateProcessor() {
         velocityEngine = new VelocityEngine();
         velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        //velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        velocityEngine.setProperty("resource.loader.classpath.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
         velocityEngine.init();
     }
     public String processTemplate(String templateName, VelocityContext context) {

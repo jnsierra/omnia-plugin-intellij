@@ -37,5 +37,19 @@ public class EntityTemplate extends TemplateAbstract implements CreateFileTempla
         context.put("KEBAB_CASE", StringUtils.toKebabCase(entityName));
         context.put("SNAKE_CASE", StringUtils.toSnakeCase(entityName));
         context.put("FIELDS", fields);
+        context.put("IS_CHILD_ENTITY", isChildEntity);
+        context.put("FATHER_ENTITY", StringUtils.toSnakeCase(fatherEntity) );
+        context.put("FATHER_ENTITY_CAMEL", fatherEntity);
+        context.put("FATHER_ENTITY_CAMEL_LOWER_CASE_FIRST_LETTER", fatherEntity!= null ? fatherEntity.substring(0, 1).toLowerCase() + fatherEntity.substring(1) : "");
+    }
+
+    @Override
+    public void setIsChildEntity(boolean isChildEntity) {
+        super.isChildEntity = isChildEntity;
+    }
+
+    @Override
+    public void setFatherEntity(String fatherEntity) {
+        super.fatherEntity = fatherEntity;
     }
 }

@@ -35,4 +35,12 @@ public class RepositoryTemplate implements CreateFileTemplate {
     public void setFields(List<DataTypeDTO> fields) {
         this.fields = fields;
     }
+
+    @Override
+    public void setIsChildEntity(boolean isChildEntity) {
+    }
+
+    @Override
+    public void setFatherEntity(String fatherEntity) {
+    }
 }

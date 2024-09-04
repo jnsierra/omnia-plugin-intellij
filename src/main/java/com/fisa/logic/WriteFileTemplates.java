@@ -53,8 +53,7 @@ public class WriteFileTemplates {
 
             // Crear el archivo con contenido
             PsiFile psiFile = PsiFileFactory.getInstance(project)
-                    //.createFileFromText(fileName, psiDirectory.getFile().getFileType(), fileContent);
-                    .createFileFromText(fileName, psiDirectory.getFiles()[0].getFileType(), fileContent);
+                    .createFileFromText(fileName, psiDirectory.getVirtualFile().getFileType(), fileContent);
 
             // Agregar el archivo a la carpeta destino
             psiDirectory.add(psiFile);

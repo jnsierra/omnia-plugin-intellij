@@ -1,5 +1,4 @@
 $PACKAGE_NAME
-
 #set($output = "")
 #set($outputMedium = "")
 #foreach($char in $NAME.substring(1).split(''))
@@ -11,10 +10,8 @@ $PACKAGE_NAME
         #set($outputMedium = "${outputMedium}${char}")
     #end
 #end
-
 #set($kebab_case_medium = $NAME.substring(0,1).toLowerCase() + $outputMedium )
 #set($kebab_case_down = $NAME.substring(0,1).toLowerCase() + $output )
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

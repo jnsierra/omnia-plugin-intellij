@@ -30,6 +30,9 @@ public enum StringUtils {
     }
 
     public static String toKebabCase(String input) {
+        if(input == null || "".equals(input)) {
+            return "";
+        }
         return input
                 .replaceAll("([a-z])([A-Z])", "$1-$2") // Inserta un guion entre letras minúsculas y mayúsculas
                 .replaceAll("([A-Z])([A-Z][a-z])", "$1-$2") // Inserta un guion entre dos letras mayúsculas si la segunda es seguida por una minúscula
@@ -37,6 +40,9 @@ public enum StringUtils {
     }
 
     public static String toSnakeCase(String input) {
+        if(input == null || "".equals(input)) {
+            return "";
+        }
         return input
                 .replaceAll("([a-z])([A-Z])", "$1_$2") // Inserta un guion bajo entre letras minúsculas y mayúsculas
                 .replaceAll("([A-Z])([A-Z][a-z])", "$1_$2") // Inserta un guion bajo entre dos letras mayúsculas si la segunda es seguida por una minúscula

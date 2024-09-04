@@ -34,6 +34,16 @@ public class ControllerTemplate extends TemplateAbstract implements CreateFileTe
     }
 
     @Override
+    public void setIsChildEntity(boolean isChildEntity) {
+        super.isChildEntity = isChildEntity;
+    }
+
+    @Override
+    public void setFatherEntity(String fatherEntity) {
+        super.fatherEntity = fatherEntity;
+    }
+
+    @Override
     protected void addParams() {
         context.put("PACKAGE_NAME", "package com.fisa.mobilemb.controller;");
         context.put("NAME", entityName);

@@ -7,6 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+#if($IS_CHILD_ENTITY)
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+#end
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,13 +22,18 @@ import java.io.Serializable;
 @Entity
 @Table(name = "${KEBAB_CASE}")
 public class ${NAME}Entity implements Serializable{
-@Id
-@Column(name = "id")
-@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${SNAKE_CASE}_id_gen")
-@SequenceGenerator(name = "${SNAKE_CASE}_id_gen", sequenceName = "${SNAKE_CASE}_seq", allocationSize = 1)
-private Long id;
-#foreach($filed in $FIELDS)
-@Column(name = "${filed.snakeCaseName}")
-private $filed.typeFieldJava $filed.nameField;
-#end
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${SNAKE_CASE}_id_gen")
+    @SequenceGenerator(name = "${SNAKE_CASE}_id_gen", sequenceName = "${SNAKE_CASE}_seq", allocationSize = 1)
+    private Long id;
+    #foreach($filed in $FIELDS)
+    @Column(name = "${filed.snakeCaseName}")
+    private $filed.typeFieldJava $filed.nameField;
+    #end
+    #if($IS_CHILD_ENTITY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "${FATHER_ENTITY}_id")
+    private ${FATHER_ENTITY_CAMEL}Entity ${FATHER_ENTITY_CAMEL_LOWER_CASE_FIRST_LETTER};
+    #end
 }

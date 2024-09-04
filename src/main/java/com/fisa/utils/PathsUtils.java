@@ -13,7 +13,7 @@ public class PathsUtils {
     }
     //URLs Templates
     public static final String PATH_TEMPLATE_REPOSITORY = "templates/REPOSITORY_TEMPLATE.vm";
-    public static final String PATH_TEMPLATE_TARGET_REPOSITORY = "personas-rest-mb-datos/src/main/java/com/fisa/mobilemb/datos/repository";
+    public static final String PATH_TEMPLATE_TARGET_REPOSITORY = "personas-rest-mb-datos/src/main/java/com/fisa/mobilemb/datos/repository/";
 
 
     public static final String PATH_TEMPLATE_DTO = "templates/DTO_TEMPLATE.vm";
@@ -35,4 +35,5 @@ public class PathsUtils {
     public static final String PATH_TEMPLATE_LIQUIDBASE = "templates/LIQUIDBASE_TEMPLATE.vm";
     public static final String PATH_TEMPLATE_TARGET_LIQUIDBASE = "personas-rest-mb-datos/src/main/resources/db";
 
+    public static final String PATH_XML_CHANGELOG_LIQUIDBASE = "/personas-rest-mb-resources/src/main/resources/db/db.changelog.xml";
 }

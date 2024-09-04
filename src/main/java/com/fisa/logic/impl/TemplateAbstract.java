@@ -9,6 +9,8 @@ abstract class TemplateAbstract {
     protected VelocityContext context;
     protected String resultTemplate;
     protected String fileName;
+    protected boolean isChildEntity;
+    protected String fatherEntity;
 
     public TemplateAbstract(){
         templateProcessor = new VelocityTemplateProcessor();

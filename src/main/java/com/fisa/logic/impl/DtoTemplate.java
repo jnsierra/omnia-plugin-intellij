@@ -39,4 +39,14 @@ public class DtoTemplate extends TemplateAbstract implements CreateFileTemplate 
     public void setFields(List<DataTypeDTO> fields) {
         this.fields = fields;
     }
+
+    @Override
+    public void setIsChildEntity(boolean isChildEntity) {
+        super.isChildEntity = isChildEntity;
+    }
+
+    @Override
+    public void setFatherEntity(String fatherEntity) {
+        super.fatherEntity = fatherEntity;
+    }
 }

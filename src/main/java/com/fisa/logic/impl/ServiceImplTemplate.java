@@ -40,4 +40,14 @@ public class ServiceImplTemplate extends TemplateAbstract implements CreateFileT
         context.put("IMPORT_SERVICE", "import com.fisa.mobilemb.service." + entityName + "Service;");
         context.put("IMPORT_ENTITY", "import com.fisa.mobilemb.datos.entity." + entityName+ "Entity;");
     }
+
+    @Override
+    public void setIsChildEntity(boolean isChildEntity) {
+        super.isChildEntity = isChildEntity;
+    }
+
+    @Override
+    public void setFatherEntity(String fatherEntity) {
+        super.fatherEntity = fatherEntity;
+    }
 }

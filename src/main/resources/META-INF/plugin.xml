@@ -7,7 +7,7 @@
 
     <description>Code generator connecting to OMNIA for QTs</description>
     <depends>com.intellij.modules.platform</depends>
-
+    <depends>com.intellij.modules.java</depends>
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
                 id="Rest Template code generation"
@@ -16,4 +16,5 @@
                 icon="AllIcons.Nodes.TextArea"  />
 
     </extensions>
+
 </idea-plugin>

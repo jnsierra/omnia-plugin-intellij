@@ -9,4 +9,7 @@ public interface CreateFileTemplate {
     TemplateResultDto createFileTemplate();
     void setEntityName(String entityName);
     void setFields(List<DataTypeDTO> fields);
+    void setIsChildEntity(boolean isChildEntity);
+    void setFatherEntity(String fatherEntity);
+
 }
